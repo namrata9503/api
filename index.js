@@ -39,6 +39,13 @@ const contContoller = require('./controllers/Customer');
 app.post('/api/v1/contact', contContoller.feedbackAdded);
 
 app.get('/api/v1/contacts', contContoller.getAllCustomersFeedbacks);
+
+//feedbacks by customer and their details
+const offerContoller = require('./controllers/Customer');
+
+app.post('/api/v1/offer', offerContoller.offersCust);
+
+app.get('/api/v1/offerCust', offerContoller.getAllCustOffers);
 // Setup server port
 var port = process.env.PORT || 8080;
 // Send message for default URL

@@ -1,5 +1,7 @@
 const Customer = require('../models/Customer');
-const Contacts = require('../models/contactCustomer')
+const Contacts = require('../models/contactCustomer');
+const Offer = require('../models/offer');
+
 // const jwt = require('jwt-simple');
 // const moment = require('moment');
 // const config = require('../config');
@@ -131,6 +133,53 @@ exports.postCust = (req, res) => {
       if (cont) {
         res.json({
           data: cont,
+          message: "All feedbacks fetched",
+          status: 200
+        });
+      } else {
+        res.json({
+          message: "No data found",
+          status: 200
+        });
+      }
+    });
+  };
+
+  //offers
+
+  exports.offersCust = (req, res, next) => {
+    var offer = new Offer({
+      name: req.body.name,
+      phone: req.body.phone,
+      city: req.body.city,
+      address: req.body.address
+    });
+    offer.save(function(err) {
+      console.log(offer)
+      console.log(err)
+
+      if (err) return next({
+        message: "offer added failed",
+        error: err
+      });
+      res.json({
+        message: "offer added successfully",
+        status: 200
+      });
+    });
+  };
+
+  exports.getAllCustOffers = (req, res) => {
+    Offer.find({}, (error, offer) => {
+      if (error) {
+        res.json({
+          message: "Server error, Please try after some time.",
+          status: 500
+        });
+      }
+      if (offer) {
+        res.json({
+          data: offer,
           message: "All feedbacks fetched",
           status: 200
         });
